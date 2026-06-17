@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía Maestra · Ciencia de Datos · MCDI</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+
+<style>
+  :root{
+    --bg:#FAF8F4; --paper:#FFFFFF; --ink:#1B2435; --ink-soft:#4A5468; --line:#E7E2D8;
+    --indigo:#2D44C9; --indigo-soft:#EEF0FE;
+    --amber:#C77B16; --amber-soft:#FCF3E2;
+    --coral:#C4453B; --coral-soft:#FBECEA;
+    --teal:#0E7C6B; --teal-soft:#E6F4F1;
+    --violet:#6A35C9; --violet-soft:#F1ECFC;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+    --serif:'Spectral',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
+    --sidebar-w:300px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .shell{display:flex;max-width:1340px;margin:0 auto;}
+  .sidebar{width:var(--sidebar-w);flex:0 0 var(--sidebar-w);position:sticky;top:0;height:100vh;overflow-y:auto;padding:30px 20px 60px;border-right:1px solid var(--line);background:linear-gradient(180deg,#FAF8F4 0%,#F5F1E9 100%);}
+  .content{flex:1 1 auto;min-width:0;padding:54px 56px 120px;}
+  .brand{font-family:var(--serif);font-weight:800;font-size:1.3rem;line-height:1.15;letter-spacing:-.01em;}
+  .brand small{display:block;font-family:var(--sans);font-weight:600;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--indigo);margin-top:8px;}
+  .toc{margin-top:22px;font-size:.85rem;}
+  .toc a{display:block;color:var(--ink-soft);text-decoration:none;padding:5px 10px;border-radius:7px;border-left:2px solid transparent;transition:all .15s;}
+  .toc a:hover{background:var(--paper);color:var(--ink);}
+  .toc a.active{color:var(--indigo);border-left-color:var(--indigo);background:var(--paper);font-weight:600;}
+  .toc .num{font-family:var(--mono);font-size:.72rem;color:var(--indigo);opacity:.7;margin-right:7px;}
+  .toc-group{margin-top:14px;font-weight:700;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:#9A9283;padding:0 10px 4px;}
+  .hero{margin-bottom:46px;}
+  .eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--indigo);}
+  .hero h1{font-family:var(--serif);font-weight:800;font-size:2.9rem;line-height:1.04;letter-spacing:-.02em;margin:.3em 0 .35em;}
+  .hero p{font-size:1.06rem;color:var(--ink-soft);max-width:64ch;}
+  .hero .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{font-family:var(--mono);font-size:.72rem;background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:5px 13px;color:var(--ink-soft);}
+  section{scroll-margin-top:24px;margin-bottom:58px;}
+  h2{font-family:var(--serif);font-weight:700;font-size:1.9rem;letter-spacing:-.015em;margin:0 0 .55em;padding-bottom:.3em;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:14px;}
+  h2 .h-num{font-family:var(--mono);font-size:1rem;color:var(--indigo);font-weight:600;}
+  h3{font-family:var(--serif);font-weight:600;font-size:1.3rem;margin:1.7em 0 .4em;color:var(--ink);}
+  h4{font-family:var(--sans);font-weight:700;font-size:.95rem;margin:1.3em 0 .3em;color:var(--ink);}
+  p{margin:.7em 0;} strong{font-weight:600;color:var(--ink);}
+  .lead{font-size:1.04rem;color:var(--ink-soft);}
+  ul,ol{margin:.6em 0;padding-left:1.3em;} li{margin:.32em 0;}
+  code{font-family:var(--mono);font-size:.85em;background:#F1EEE7;padding:1px 6px;border-radius:5px;color:#3A2E66;}
+  .term{font-weight:600;color:var(--indigo);}
+  .box{border-radius:12px;padding:16px 20px;margin:18px 0;font-size:.95rem;border:1px solid;}
+  .box .box-label{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;display:block;margin-bottom:6px;}
+  .box p:first-of-type{margin-top:0;} .box p:last-child{margin-bottom:0;}
+  .ex{background:var(--amber-soft);border-color:#EAD3A6;} .ex .box-label{color:var(--amber);}
+  .key{background:var(--indigo-soft);border-color:#CDD3FA;} .key .box-label{color:var(--indigo);}
+  .bias{background:var(--coral-soft);border-color:#F0CBC6;} .bias .box-label{color:var(--coral);}
+  .py{background:var(--teal-soft);border-color:#BFE3DC;} .py .box-label{color:var(--teal);}
+  .py pre{margin:6px 0 0;background:#0F2A26;color:#D6EFE9;border-radius:8px;padding:12px 14px;overflow-x:auto;font-family:var(--mono);font-size:.82rem;line-height:1.5;}
+  .py pre .c{color:#7FB4A9;} .py pre .k{color:#8FD0FF;}
+  .sabias{background:var(--violet-soft);border-color:#D8C9F4;border-left:3px solid var(--violet);margin-top:26px;}
+  .sabias .box-label{color:var(--violet);}
+  .sabias .box-label::before{content:"💡 ";}
+  .formula{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--indigo);border-radius:8px;padding:6px 18px;margin:14px 0;overflow-x:auto;}
+  table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.9rem;background:var(--paper);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+  th{background:#F3F0E9;text-align:left;font-weight:600;font-size:.82rem;}
+  th,td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  details.cheat{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:4px 20px;margin:14px 0;}
+  details.cheat summary{cursor:pointer;font-family:var(--serif);font-weight:600;font-size:1.1rem;padding:12px 0;list-style:none;display:flex;justify-content:space-between;align-items:center;}
+  details.cheat summary::-webkit-details-marker{display:none;}
+  details.cheat summary::after{content:"+";font-family:var(--mono);color:var(--indigo);font-size:1.4rem;}
+  details.cheat[open] summary::after{content:"–";}
+  details.cheat .cheat-body{padding-bottom:16px;}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+  .pill{font-family:var(--mono);font-size:.74rem;padding:4px 11px;border-radius:6px;background:#F1EEE7;color:var(--ink-soft);border:1px solid var(--line);}
+  .foot{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);font-size:.85rem;color:var(--ink-soft);}
+  .menu-btn{display:none;}
+  @media(max-width:920px){
+    .sidebar{position:fixed;left:0;top:0;z-index:40;transform:translateX(-100%);transition:transform .25s;box-shadow:4px 0 24px rgba(0,0,0,.12);}
+    .sidebar.open{transform:translateX(0);}
+    .content{padding:74px 22px 90px;}
+    .hero h1{font-size:2.1rem;} h2{font-size:1.5rem;}
+    .menu-btn{display:flex;align-items:center;gap:8px;position:fixed;top:14px;left:14px;z-index:50;background:var(--indigo);color:#fff;border:none;border-radius:9px;padding:9px 14px;font-weight:600;font-size:.85rem;cursor:pointer;box-shadow:0 4px 14px rgba(45,68,201,.35);}
+    .scrim{display:none;position:fixed;inset:0;background:rgba(20,24,40,.4);z-index:30;}
+    .scrim.show{display:block;}
+  }
+  @media(min-width:921px){ .menu-btn{display:none!important;} }
+</style>
+</head>
+<body>
+
+<button class="menu-btn" id="menuBtn">☰ Índice</button>
+<div class="scrim" id="scrim"></div>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">Guía Maestra<br>Ciencia de Datos<small>Repaso integral · MCDI</small></div>
+    <nav class="toc" id="toc">
+      <div class="toc-group">Fundamentos</div>
+      <a href="#s0"><span class="num">00</span>Cómo usar esta guía</a>
+      <a href="#s1"><span class="num">01</span>Conceptos base</a>
+      <a href="#s2"><span class="num">02</span>Estadística descriptiva</a>
+      <div class="toc-group">Probabilidad</div>
+      <a href="#s3"><span class="num">03</span>Probabilidad</a>
+      <a href="#s4"><span class="num">04</span>Distribuciones</a>
+      <a href="#s5"><span class="num">05</span>TLC y muestreo</a>
+      <div class="toc-group">Inferencia</div>
+      <a href="#s6"><span class="num">06</span>Inferencia y pruebas</a>
+      <div class="toc-group">Matemáticas para ML</div>
+      <a href="#s7"><span class="num">07</span>Álgebra lineal</a>
+      <a href="#s8"><span class="num">08</span>Cálculo y optimización</a>
+      <div class="toc-group">Modelos</div>
+      <a href="#s9"><span class="num">09</span>Regresión lineal</a>
+      <a href="#s10"><span class="num">10</span>Sesgo–Varianza</a>
+      <a href="#s11"><span class="num">11</span>Machine Learning</a>
+      <a href="#s12"><span class="num">12</span>Evaluación de modelos</a>
+      <a href="#s13"><span class="num">13</span>Cadenas de Markov</a>
+      <div class="toc-group">Datos en la práctica</div>
+      <a href="#s14"><span class="num">14</span>Limpieza de datos</a>
+      <a href="#s15"><span class="num">15</span>SQL y bases de datos</a>
+      <a href="#s16"><span class="num">16</span>Teoría de la información</a>
+      <a href="#s17"><span class="num">17</span>Series de tiempo</a>
+      <div class="toc-group">Trampas y causalidad</div>
+      <a href="#s18"><span class="num">18</span>Sesgos</a>
+      <a href="#s19"><span class="num">19</span>Inferencia causal</a>
+      <div class="toc-group">Repaso</div>
+      <a href="#s20"><span class="num">20</span>Fórmulas clave</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+
+    <div class="hero">
+      <span class="eyebrow">Guía integral · Examen de maestría</span>
+      <h1>De la media aritmética al gradiente. Todo, en un lugar.</h1>
+      <p class="lead">Estadística, probabilidad, álgebra lineal, cálculo, machine learning, SQL, teoría de la información y los sesgos que arruinan análisis. Cada concepto con su intuición, su fórmula y un ejemplo. Y al final de cada sección, un dato curioso para que se te quede.</p>
+      <div class="meta">
+        <span class="chip">21 secciones</span>
+        <span class="chip">Fórmulas renderizadas</span>
+        <span class="chip">Ejemplos resueltos</span>
+        <span class="chip">¿Sabías que...?</span>
+        <span class="chip">Cheat sheet</span>
+      </div>
+    </div>
+
+    <!-- 00 -->
+    <section id="s0">
+      <h2><span class="h-num">00</span>Cómo usar esta guía</h2>
+      <p>Cada sección sigue el mismo patrón: <strong>qué es</strong> (intuición en una frase), <strong>la fórmula</strong> y <strong>un ejemplo</strong>. Los recuadros de color te orientan rápido:</p>
+      <div class="box key"><span class="box-label">Clave</span>La idea que no se te puede olvidar para el examen.</div>
+      <div class="box ex"><span class="box-label">Ejemplo</span>Un caso concreto con números para que la fórmula deje de ser abstracta.</div>
+      <div class="box bias"><span class="box-label">Cuidado / Sesgo</span>El error clásico. Saber esto distingue una respuesta buena de una excelente.</div>
+      <div class="box py"><span class="box-label">En Python</span>Cómo se ve en código, porque al final lo vas a programar.</div>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>La palabra <strong>"estadística"</strong> viene de <em>Statistik</em>, acuñada en el siglo XVIII a partir de "Estado": originalmente era la información que los gobiernos recolectaban sobre su población y recursos (censos, impuestos, soldados). Antes de ser una ciencia, fue una herramienta del poder.</div>
+    </section>
+
+    <!-- 01 -->
+    <section id="s1">
+      <h2><span class="h-num">01</span>Conceptos base</h2>
+      <h3>Población vs. muestra</h3>
+      <p>La <span class="term">población</span> es el conjunto completo que te interesa (todos los departamentos de CDMX). La <span class="term">muestra</span> es el subconjunto que sí mides (200 departamentos). Casi nunca puedes medir todo, así que infieres a partir de la muestra.</p>
+      <ul>
+        <li><strong>Parámetro</strong>: característica de la <em>población</em> (\(\mu\), \(\sigma\), \(p\)). Fijo y normalmente desconocido.</li>
+        <li><strong>Estadístico</strong>: la misma característica en la <em>muestra</em> (\(\bar{x}\), \(s\), \(\hat{p}\)). Lo usas para estimar el parámetro.</li>
+      </ul>
+      <div class="box key"><span class="box-label">Clave</span>Toda la inferencia estadística es esto: usar un <strong>estadístico</strong> (lo que conoces) para estimar un <strong>parámetro</strong> (lo que no), y medir qué tanto te puedes equivocar.</div>
+      <h3>Tipos de datos</h3>
+      <table>
+        <tr><th>Tipo</th><th>Subtipo</th><th>Ejemplo</th></tr>
+        <tr><td rowspan="2"><strong>Cualitativo</strong></td><td>Nominal (sin orden)</td><td>Color, ciudad, tipo de obra</td></tr>
+        <tr><td>Ordinal (con orden)</td><td>Nivel educativo, satisfacción</td></tr>
+        <tr><td rowspan="2"><strong>Cuantitativo</strong></td><td>Discreto (contable)</td><td>Número de departamentos, defectos</td></tr>
+        <tr><td>Continuo (medible)</td><td>Superficie en m², precio, temperatura</td></tr>
+      </table>
+      <div class="box bias"><span class="box-label">Cuidado</span>El tipo de dato decide qué análisis aplica. No puedes sacar la "media" de colores, ni meter una variable nominal a una regresión sin convertirla a <em>dummies</em>. Identificar el tipo es siempre el primer paso.</div>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>El <strong>"votante/persona promedio" casi no existe</strong>. La persona promedio tiene un poco <em>menos</em> de dos piernas: como algunas personas tienen una o ninguna y nadie tiene tres, la media baja de 2. Es el recordatorio perfecto de que un promedio no describe a ningún individuo real.</div>
+    </section>
+
+    <!-- 02 -->
+    <section id="s2">
+      <h2><span class="h-num">02</span>Estadística descriptiva</h2>
+      <p class="lead">Resumir un montón de números en pocas cifras útiles. Tres preguntas: ¿dónde está el centro?, ¿qué tan dispersos están?, ¿qué forma tienen?</p>
+      <h3>Tendencia central</h3>
+      <div class="formula">\[ \bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i \qquad \text{(media)} \]</div>
+      <ul>
+        <li><strong>Media</strong>: el promedio. Sensible a valores extremos.</li>
+        <li><strong>Mediana</strong>: el valor de en medio al ordenar. Robusta a extremos.</li>
+        <li><strong>Moda</strong>: el valor más frecuente. La única que sirve para datos nominales.</li>
+      </ul>
+      <div class="box ex"><span class="box-label">Ejemplo</span>Sueldos: 12k, 13k, 14k, 15k, <strong>200k</strong>. La media es 50.8k (engañosa). La mediana es 14k (representa mejor al grupo). <strong>Con extremos o asimetría, reporta la mediana.</strong></div>
+      <h3>Dispersión</h3>
+      <div class="formula">\[ s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2 \qquad s=\sqrt{s^2} \]</div>
+      <p>La <span class="term">varianza</span> es el promedio de las distancias al cuadrado a la media; la <span class="term">desviación estándar</span> es su raíz, en las mismas unidades que los datos.</p>
+      <div class="box key"><span class="box-label">Clave: ¿por qué n−1?</span>Dividir entre \(n-1\) corrige un sesgo: con la muestra subestimarías la varianza real. Es la <strong>corrección de Bessel</strong>, y a los \(n-1\) se les dice <strong>grados de libertad</strong>.</div>
+      <ul>
+        <li><strong>Rango</strong>: máx − mín. Muy sensible a extremos.</li>
+        <li><strong>IQR</strong>: \(Q_3-Q_1\), el ancho del 50% central. Robusto.</li>
+        <li><strong>Coef. de variación</strong>: \(CV=s/\bar{x}\), dispersión relativa para comparar escalas distintas.</li>
+      </ul>
+      <h3>Forma</h3>
+      <ul>
+        <li><strong>Asimetría (skewness)</strong>: cola larga a la derecha → positiva (ingresos); a la izquierda → negativa.</li>
+        <li><strong>Curtosis</strong>: qué tan pesadas son las colas (cuántos extremos respecto a una normal).</li>
+      </ul>
+      <div class="box py"><span class="box-label">En Python</span><pre>df[<span class="k">'precio'</span>].describe()   <span class="c"># count, mean, std, min, cuartiles, max</span>
+df[<span class="k">'precio'</span>].median()
+df[<span class="k">'precio'</span>].skew()       <span class="c"># asimetría</span>
+df[<span class="k">'precio'</span>].kurt()       <span class="c"># curtosis</span></pre></div>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>El <strong>diagrama de caja (boxplot)</strong> lo inventó John Tukey en los años 70, el mismo matemático que acuñó las palabras <strong>"bit"</strong> y <strong>"software"</strong>. Diseñó el boxplot para ver de un vistazo la mediana, la dispersión y los outliers sin hacer una sola cuenta a mano.</div>
+    </section>
+
+    <!-- 03 -->
+    <section id="s3">
+      <h2><span class="h-num">03</span>Probabilidad</h2>
+      <p class="lead">El lenguaje de la incertidumbre. Todo lo que sigue descansa aquí.</p>
+      <h3>Reglas fundamentales</h3>
+      <ul>
+        <li><strong>Rango</strong>: \(0 \le P(A) \le 1\).</li>
+        <li><strong>Complemento</strong>: \(P(A^c)=1-P(A)\).</li>
+        <li><strong>Suma</strong>: \(P(A\cup B)=P(A)+P(B)-P(A\cap B)\).</li>
+        <li><strong>Producto</strong>: \(P(A\cap B)=P(A)\,P(B\mid A)\).</li>
+      </ul>
+      <h3>Probabilidad condicional e independencia</h3>
+      <div class="formula">\[ P(A \mid B) = \frac{P(A \cap B)}{P(B)} \]</div>
+      <p>\(P(A\mid B)\) es la probabilidad de A <em>dado que</em> ya pasó B. Son <span class="term">independientes</span> si \(P(A\mid B)=P(A)\), es decir \(P(A\cap B)=P(A)P(B)\).</p>
+      <h3>Teorema de Bayes</h3>
+      <p>La herramienta para <strong>invertir</strong> una condicional: pasar de \(P(B\mid A)\) a \(P(A\mid B)\).</p>
+      <div class="formula">\[ P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)} \]</div>
+      <div class="box ex"><span class="box-label">Ejemplo — el clásico de examen</span>
+        <p>Enfermedad en el <strong>1%</strong>. La prueba acierta en enfermos el <strong>99%</strong>, pero da falso positivo en el <strong>5%</strong> de sanos. Si das positivo, ¿probabilidad real de estar enfermo?</p>
+        <div class="formula">\[ P(\text{enf}\mid +)=\frac{(0.99)(0.01)}{(0.99)(0.01)+(0.05)(0.99)}\approx 0.167 \]</div>
+        <p>Solo <strong>16.7%</strong>. Como la enfermedad es rara, hay muchos más falsos positivos. Es la <strong>falacia de la tasa base</strong>.</p>
+      </div>
+      <h3>Variables aleatorias, esperanza y varianza</h3>
+      <div class="formula">\[ E[X] = \sum_i x_i\,P(x_i) \qquad \text{Var}(X) = E[(X-E[X])^2] \]</div>
+      <div class="box key"><span class="box-label">Clave</span>El valor esperado es un <strong>promedio ponderado por probabilidad</strong>. No tiene que ser un valor real: el esperado de un dado es 3.5, aunque nunca saques 3.5.</div>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>La <strong>paradoja del cumpleaños</strong>: en un grupo de apenas <strong>23 personas</strong>, ya hay más del 50% de probabilidad de que dos compartan cumpleaños. Con 70 personas, sube al 99.9%. La intuición falla porque no comparas tu cumpleaños contra los demás, sino <em>todos los pares posibles</em> entre sí.</div>
+    </section>
+
+    <!-- 04 -->
+    <section id="s4">
+      <h2><span class="h-num">04</span>Distribuciones de probabilidad</h2>
+      <p class="lead">Patrones de cómo se reparten las probabilidades. Reconocer cuál aplica es media batalla ganada.</p>
+      <h3>Discretas</h3>
+      <table>
+        <tr><th>Distribución</th><th>Modela</th><th>E / Var</th></tr>
+        <tr><td><strong>Bernoulli</strong></td><td>Un ensayo éxito/fracaso (1 volado)</td><td><code>p</code> / <code>p(1−p)</code></td></tr>
+        <tr><td><strong>Binomial</strong></td><td>Éxitos en <em>n</em> ensayos independientes</td><td><code>np</code> / <code>np(1−p)</code></td></tr>
+        <tr><td><strong>Poisson</strong></td><td>Eventos raros en un intervalo (llamadas/hora)</td><td><code>λ</code> / <code>λ</code></td></tr>
+        <tr><td><strong>Geométrica</strong></td><td>Ensayos hasta el primer éxito</td><td><code>1/p</code> / <code>(1−p)/p²</code></td></tr>
+      </table>
+      <div class="formula">\[ \text{Binomial: } P(X=k)=\binom{n}{k}p^k(1-p)^{n-k} \qquad \text{Poisson: } P(X=k)=\frac{\lambda^k e^{-\lambda}}{k!} \]</div>
+      <div class="box ex"><span class="box-label">Ejemplo — Poisson</span>Llegan en promedio <strong>3 llamadas/min</strong> (\(\lambda=3\)). ¿Exactamente 5? \(P(X=5)=\frac{3^5 e^{-3}}{5!}\approx 0.10\). Sirve para defectos, accidentes, visitas a una web.</div>
+      <h3>Continuas</h3>
+      <p>La estrella es la <span class="term">normal</span> (campana de Gauss), definida por \(\mu\) y \(\sigma\):</p>
+      <div class="formula">\[ f(x)=\frac{1}{\sigma\sqrt{2\pi}}\,e^{-\frac{(x-\mu)^2}{2\sigma^2}} \qquad z=\frac{x-\mu}{\sigma} \]</div>
+      <div class="box key"><span class="box-label">Clave — regla 68–95–99.7</span>El <strong>68%</strong> de los datos cae a ±1\(\sigma\), el <strong>95%</strong> a ±2\(\sigma\), el <strong>99.7%</strong> a ±3\(\sigma\). Memorízala. El <strong>z-score</strong> estandariza cualquier valor para poder compararlo.</div>
+      <ul>
+        <li><strong>Uniforme</strong>: todos los valores de un rango igual de probables.</li>
+        <li><strong>Exponencial</strong>: tiempo de espera <em>entre</em> eventos de Poisson.</li>
+      </ul>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>La <strong>campana de Gauss</strong> fue tan importante que apareció impresa en el antiguo billete alemán de <strong>10 marcos</strong>, junto al retrato de Carl Friedrich Gauss y su fórmula. Pocas ecuaciones han circulado literalmente en las carteras de un país entero.</div>
+    </section>
+
+    <!-- 05 -->
+    <section id="s5">
+      <h2><span class="h-num">05</span>Teorema del Límite Central y muestreo</h2>
+      <p>Si tomas muchas muestras y promedias cada una, esos promedios forman la <span class="term">distribución muestral de la media</span>. Su dispersión es el <span class="term">error estándar</span>:</p>
+      <div class="formula">\[ SE = \frac{\sigma}{\sqrt{n}} \]</div>
+      <div class="box key"><span class="box-label">Clave — el teorema más importante de la estadística</span>Sin importar la forma de la población, la <strong>distribución de las medias muestrales se aproxima a una normal</strong> conforme crece <em>n</em> (regla práctica \(n\ge 30\)), con media \(\mu\) y error estándar \(\sigma/\sqrt{n}\).</div>
+      <p>¿Por qué importa? Porque te deja usar toda la maquinaria de la normal (intervalos, pruebas) aunque tus datos no sean normales. Es el puente entre describir e inferir.</p>
+      <div class="box bias"><span class="box-label">Cuidado</span>El TLC habla de la distribución de <strong>las medias</strong>, no de los datos individuales. Promediar no vuelve normales tus datos crudos; vuelve normal el comportamiento del promedio.</div>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>El TLC es <strong>por qué los casinos siempre ganan</strong>. Una apuesta individual es impredecible, pero el promedio de millones de apuestas converge con precisión casi quirúrgica al valor esperado a favor de la casa. El azar de cada jugador se vuelve certeza estadística para el casino.</div>
+    </section>
+
+    <!-- 06 -->
+    <section id="s6">
+      <h2><span class="h-num">06</span>Inferencia y pruebas de hipótesis</h2>
+      <h3>Intervalos de confianza</h3>
+      <div class="formula">\[ \bar{x} \pm z_{\alpha/2}\cdot\frac{\sigma}{\sqrt{n}} \]</div>
+      <div class="box bias"><span class="box-label">Cuidado — interpretación correcta</span>Un IC del 95% <strong>no</strong> dice "hay 95% de probabilidad de que el parámetro esté aquí". Dice que <strong>si repitieras el muestreo, el 95% de los intervalos contendrían el parámetro real</strong>. El parámetro es fijo; lo aleatorio es el intervalo.</div>
+      <h3>La lógica de las pruebas</h3>
+      <ol>
+        <li><strong>\(H_0\) (nula)</strong>: el "no pasa nada" / status quo.</li>
+        <li><strong>\(H_1\) (alternativa)</strong>: lo que quieres demostrar.</li>
+        <li>Calculas un <strong>estadístico</strong> y de ahí un <strong>p-value</strong>.</li>
+        <li>Si \(p<\alpha\) (típico 0.05), <strong>rechazas \(H_0\)</strong>.</li>
+      </ol>
+      <div class="box key"><span class="box-label">Clave — qué es el p-value</span>Probabilidad de observar algo <strong>tan extremo o más</strong> que tu resultado <em>suponiendo \(H_0\) verdadera</em>. P chico = tus datos serían muy raros si no pasara nada → evidencia contra \(H_0\).</div>
+      <div class="box bias"><span class="box-label">Cuidado — mitos del p-value</span>
+        <ul style="margin:0">
+          <li>NO es la probabilidad de que \(H_0\) sea verdadera.</li>
+          <li>\(p>0.05\) NO prueba \(H_0\); solo que no hubo evidencia suficiente.</li>
+          <li>Significativo (estadístico) ≠ importante (práctico). Con <em>n</em> enorme, diferencias minúsculas salen significativas.</li>
+        </ul>
+      </div>
+      <h3>Errores Tipo I y Tipo II</h3>
+      <table>
+        <tr><th></th><th>\(H_0\) verdadera</th><th>\(H_0\) falsa</th></tr>
+        <tr><td><strong>Rechazas \(H_0\)</strong></td><td style="background:var(--coral-soft)"><strong>Tipo I</strong> (\(\alpha\)) · falso positivo</td><td style="background:var(--teal-soft)">✓ Correcto (potencia \(1-\beta\))</td></tr>
+        <tr><td><strong>No rechazas</strong></td><td style="background:var(--teal-soft)">✓ Correcto</td><td style="background:var(--coral-soft)"><strong>Tipo II</strong> (\(\beta\)) · falso negativo</td></tr>
+      </table>
+      <div class="box ex"><span class="box-label">Ejemplo memorable</span>Tipo I = condenar a un inocente. Tipo II = liberar a un culpable. Bajar \(\alpha\) reduce Tipo I pero sube Tipo II: hay <em>tradeoff</em>.</div>
+      <h3>Qué prueba usar</h3>
+      <table>
+        <tr><th>Prueba</th><th>Para qué</th></tr>
+        <tr><td><strong>t (1 muestra)</strong></td><td>¿La media difiere de un valor dado?</td></tr>
+        <tr><td><strong>t (2 muestras)</strong></td><td>¿Difieren dos grupos? (A/B testing)</td></tr>
+        <tr><td><strong>t pareado</strong></td><td>Antes vs. después en los mismos sujetos</td></tr>
+        <tr><td><strong>ANOVA</strong></td><td>Comparar 3+ grupos</td></tr>
+        <tr><td><strong>χ² (chi-cuadrada)</strong></td><td>Asociación entre dos variables categóricas</td></tr>
+      </table>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>El famoso umbral de <strong>p &lt; 0.05</strong> es esencialmente <strong>arbitrario</strong>. Lo popularizó Ronald Fisher en 1925 como un punto de corte "cómodo", no por una ley matemática. Hoy muchos científicos argumentan que ese 0.05 ha causado décadas de resultados poco replicables. Una de las convenciones más influyentes de la ciencia nació casi por capricho.</div>
+    </section>
+
+    <!-- 07 -->
+    <section id="s7">
+      <h2><span class="h-num">07</span>Álgebra lineal</h2>
+      <p class="lead">El idioma en el que están escritos los datos. Una tabla de datos <em>es</em> una matriz; casi todo el ML son operaciones sobre matrices.</p>
+      <h3>Vectores y matrices</h3>
+      <ul>
+        <li><strong>Vector</strong>: una lista ordenada de números. Una observación (un departamento con sus features: m², recámaras, precio) es un vector.</li>
+        <li><strong>Matriz</strong>: una tabla de números. Tu dataset completo: <strong>filas = observaciones</strong>, <strong>columnas = variables</strong>.</li>
+      </ul>
+      <h3>Operaciones clave</h3>
+      <ul>
+        <li><strong>Producto punto</strong> de dos vectores: \(\mathbf{a}\cdot\mathbf{b}=\sum a_i b_i\). Mide qué tan "alineados" están; base de la similitud entre datos.</li>
+        <li><strong>Multiplicación matriz × vector</strong>: aplicar una <em>transformación</em> a los datos (rotar, escalar, proyectar). Una predicción lineal es justo esto.</li>
+        <li><strong>Norma</strong>: \(\|\mathbf{v}\|=\sqrt{\sum v_i^2}\), la "longitud" del vector → distancia entre puntos.</li>
+      </ul>
+      <div class="box key"><span class="box-label">Clave — regresión en forma matricial</span>Toda la regresión múltiple se resuelve de un golpe con álgebra lineal, la <strong>ecuación normal</strong>:
+        <div class="formula" style="margin:8px 0 0">\[ \boldsymbol{\beta}=(X^\top X)^{-1}X^\top y \]</div>
+      </div>
+      <h3>Eigenvalores y eigenvectores</h3>
+      <p>Un <span class="term">eigenvector</span> de una transformación es una dirección que <em>no cambia de dirección</em> al aplicarla, solo se estira o encoge; el factor de estiramiento es su <span class="term">eigenvalor</span> (\(A\mathbf{v}=\lambda\mathbf{v}\)).</p>
+      <div class="box ex"><span class="box-label">Ejemplo — PCA</span>El <strong>Análisis de Componentes Principales</strong> encuentra los eigenvectores de la matriz de covarianza: son las direcciones donde tus datos varían más. Te dejan reducir 50 variables a 2 o 3 conservando casi toda la información.</div>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>El algoritmo <strong>PageRank</strong> que lanzó a Google es, en esencia, encontrar el <strong>eigenvector dominante</strong> de una matriz gigantesca que representa toda la web. Un solo concepto de álgebra lineal valió, literalmente, billones de dólares.</div>
+    </section>
+
+    <!-- 08 -->
+    <section id="s8">
+      <h2><span class="h-num">08</span>Cálculo y optimización</h2>
+      <p class="lead">Cómo <em>aprenden</em> los modelos. La estadística describe; el cálculo ajusta.</p>
+      <h3>Derivada y gradiente</h3>
+      <ul>
+        <li><strong>Derivada</strong>: la razón de cambio, la pendiente de una función en un punto. Cero en máximos y mínimos.</li>
+        <li><strong>Gradiente</strong> (\(\nabla\)): el vector de derivadas parciales. Apunta hacia la <strong>subida más empinada</strong> de la función.</li>
+      </ul>
+      <h3>Descenso de gradiente</h3>
+      <p>Para <strong>minimizar</strong> una función (el error del modelo), te mueves en dirección <em>opuesta</em> al gradiente, en pasitos:</p>
+      <div class="formula">\[ \theta_{nuevo}=\theta_{viejo}-\eta\,\nabla J(\theta) \]</div>
+      <p>Donde \(\eta\) es la <span class="term">tasa de aprendizaje</span> (learning rate): el tamaño del paso. \(J(\theta)\) es la <span class="term">función de pérdida/costo</span>, lo que el modelo intenta minimizar (en regresión, el error cuadrático medio).</p>
+      <div class="box ex"><span class="box-label">Ejemplo — la intuición</span>Imagina que estás en una montaña con niebla y quieres bajar al valle. No ves el fondo, pero sí sientes la pendiente bajo tus pies. Das un paso cuesta abajo, vuelves a sentir, otro paso. Eso es el descenso de gradiente.</div>
+      <div class="box bias"><span class="box-label">Cuidado</span>Si la tasa de aprendizaje es muy grande, te pasas del valle y rebotas sin converger. Si es muy chica, tardas eternidades. Y puedes atorarte en un <strong>mínimo local</strong> que no es el mejor global.</div>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>Entrenar un modelo grande de IA puede implicar <strong>billones de pasitos</strong> de descenso de gradiente. Cada uno es un ajuste minúsculo cuesta abajo; juntos, a lo largo de semanas de cómputo, es como el modelo "aprende". Toda la magia de la IA moderna se reduce, en el fondo, a bajar una colina con paciencia.</div>
+    </section>
+
+    <!-- 09 -->
+    <section id="s9">
+      <h2><span class="h-num">09</span>Regresión lineal</h2>
+      <p class="lead">Modelar la relación entre lo que quieres predecir (\(y\)) y lo que la explica (\(x\)).</p>
+      <h3>El modelo</h3>
+      <div class="formula">\[ y=\beta_0+\beta_1 x+\varepsilon \quad\text{(simple)}\qquad y=\beta_0+\beta_1x_1+\dots+\beta_kx_k+\varepsilon \quad\text{(múltiple)} \]</div>
+      <ul>
+        <li>\(\beta_0\) (<strong>intercepto</strong>): valor de \(y\) cuando las \(x=0\).</li>
+        <li>\(\beta_1\) (<strong>pendiente</strong>): cuánto cambia \(y\) por unidad de \(x\), <em>manteniendo lo demás constante</em>.</li>
+        <li>\(\varepsilon\): el error, lo que el modelo no captura.</li>
+      </ul>
+      <h3>Mínimos cuadrados (OLS)</h3>
+      <p>Elige los \(\beta\) que <strong>minimizan la suma de errores al cuadrado</strong>. Para regresión simple:</p>
+      <div class="formula">\[ \beta_1=\frac{\sum(x_i-\bar{x})(y_i-\bar{y})}{\sum(x_i-\bar{x})^2}=\frac{\text{cov}(x,y)}{\text{var}(x)} \qquad \beta_0=\bar{y}-\beta_1\bar{x} \]</div>
+      <div class="box ex"><span class="box-label">Ejemplo — precio de departamento</span>Ajustas <code>precio = β₀ + β₁·(m²)</code> y sale \(\beta_1=18{,}500\): cada m² extra sube el precio ~$18,500 en promedio.</div>
+      <h3>¿Qué tan bueno es?</h3>
+      <div class="formula">\[ R^2=1-\frac{SS_{res}}{SS_{tot}} \]</div>
+      <p><span class="term">R²</span>: proporción de la variabilidad de \(y\) que el modelo explica (0 a 1). \(R^2=0.8\) → explica el 80%.</p>
+      <div class="box bias"><span class="box-label">Cuidado</span>R² <strong>siempre sube</strong> al agregar variables, aunque sean basura. Por eso usas <strong>R² ajustado</strong>. Y R² alto no implica modelo correcto ni causalidad.</div>
+      <h3>Supuestos (mnemotécnico: LINE)</h3>
+      <table>
+        <tr><th>Supuesto</th><th>Exige</th><th>Se revisa con</th></tr>
+        <tr><td><strong>L</strong>inealidad</td><td>Relación x–y lineal</td><td>Residuales vs. ajustados</td></tr>
+        <tr><td><strong>I</strong>ndependencia</td><td>Errores no correlacionados</td><td>Durbin–Watson</td></tr>
+        <tr><td><strong>N</strong>ormalidad</td><td>Residuales normales</td><td>Q–Q plot</td></tr>
+        <tr><td><strong>E</strong> homocedasticidad</td><td>Varianza del error constante</td><td>Residuales sin embudo</td></tr>
+      </table>
+      <h3>Problemas y regularización</h3>
+      <ul>
+        <li><strong>Multicolinealidad</strong>: predictores muy correlacionados entre sí; se detecta con <span class="term">VIF</span> (&gt;5–10 es problema).</li>
+        <li><strong>Ridge (L2)</strong>: penaliza \(\sum\beta_j^2\); encoge coeficientes. Bueno con multicolinealidad.</li>
+        <li><strong>Lasso (L1)</strong>: penaliza \(\sum|\beta_j|\); puede volver coeficientes <em>exactamente</em> cero → selección automática de variables.</li>
+        <li><strong>Logística</strong>: cuando \(y\) es binaria, modela la probabilidad con la sigmoide (es clasificación).</li>
+      </ul>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>La palabra <strong>"regresión"</strong> viene de Francis Galton (1880s), que notó que los hijos de padres muy altos tienden a ser <em>menos</em> altos, más cerca del promedio: la <strong>"regresión a la media"</strong>. El término se quedó para toda la técnica, aunque originalmente describía ese fenómeno tan específico.</div>
+    </section>
+
+    <!-- 10 -->
+    <section id="s10">
+      <h2><span class="h-num">10</span>Sesgo–Varianza</h2>
+      <p class="lead">El tradeoff central del ML. Explica por qué un modelo más complejo no siempre es mejor.</p>
+      <div class="formula">\[ \text{Error}=\underbrace{\text{Sesgo}^2}_{\text{rigidez}}+\underbrace{\text{Varianza}}_{\text{inestabilidad}}+\underbrace{\text{ruido}}_{\text{irreducible}} \]</div>
+      <ul>
+        <li><strong>Sesgo alto → <span class="term">underfitting</span></strong>: modelo demasiado simple, no capta el patrón. Falla en entrenamiento <em>y</em> en prueba.</li>
+        <li><strong>Varianza alta → <span class="term">overfitting</span></strong>: modelo demasiado complejo, memoriza el ruido. Excelente en entrenamiento, malo en datos nuevos.</li>
+      </ul>
+      <div class="box key"><span class="box-label">Clave</span>Al subir la complejidad, el sesgo baja pero la varianza sube. El objetivo es el <strong>punto medio</strong> que minimiza el error en datos <em>no vistos</em>. Por eso existe la <strong>validación cruzada</strong>.</div>
+      <div class="box bias"><span class="box-label">Cuidado — señal de overfitting</span>99% en entrenamiento y 70% en prueba = está memorizando, no aprendiendo. La brecha entre ambos es el síntoma.</div>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>El estadístico George Box dejó la frase más citada de la disciplina: <strong>"todos los modelos están equivocados, pero algunos son útiles"</strong>. Ningún modelo captura la realidad completa; el arte está en que sea lo bastante bueno para la decisión que necesitas tomar.</div>
+    </section>
+
+    <!-- 11 -->
+    <section id="s11">
+      <h2><span class="h-num">11</span>Machine Learning: panorama</h2>
+      <h3>Los dos grandes tipos</h3>
+      <ul>
+        <li><strong>Supervisado</strong> (datos con etiqueta): aprendes de ejemplos con la "respuesta correcta". Se divide en <em>regresión</em> (predecir un número) y <em>clasificación</em> (predecir una categoría).</li>
+        <li><strong>No supervisado</strong> (sin etiqueta): buscas estructura oculta. Incluye <em>clustering</em> (agrupar) y <em>reducción de dimensionalidad</em>.</li>
+        <li><strong>Por refuerzo</strong>: un agente aprende por prueba y error con recompensas (juegos, robótica).</li>
+      </ul>
+      <h3>Los algoritmos que debes reconocer</h3>
+      <table>
+        <tr><th>Algoritmo</th><th>Tipo</th><th>En una línea</th></tr>
+        <tr><td><strong>Árbol de decisión</strong></td><td>Superv.</td><td>Serie de preguntas sí/no que parten los datos</td></tr>
+        <tr><td><strong>Random Forest</strong></td><td>Superv.</td><td>Muchos árboles votando; robusto y potente</td></tr>
+        <tr><td><strong>KNN</strong></td><td>Superv.</td><td>Te pareces a tus <em>k</em> vecinos más cercanos</td></tr>
+        <tr><td><strong>SVM</strong></td><td>Superv.</td><td>Traza la frontera con el mayor margen entre clases</td></tr>
+        <tr><td><strong>Naive Bayes</strong></td><td>Superv.</td><td>Clasifica con Bayes (asume independencia); spam</td></tr>
+        <tr><td><strong>k-means</strong></td><td>No superv.</td><td>Agrupa en <em>k</em> clústeres por cercanía</td></tr>
+        <tr><td><strong>PCA</strong></td><td>No superv.</td><td>Reduce dimensiones conservando la varianza</td></tr>
+      </table>
+      <div class="box key"><span class="box-label">Clave — ¿regresión o clasificación?</span>Si la respuesta es un <strong>número</strong> (precio, temperatura) → regresión. Si es una <strong>categoría</strong> (spam/no spam, aprobado/rechazado) → clasificación. Es la primera pregunta que debes hacerte ante cualquier problema.</div>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>El principio detrás de <strong>Random Forest</strong> lo demostró Francis Galton en 1906: en una feria, pidió a ~800 personas adivinar el peso de un buey. Ningún individuo acertó, pero el <strong>promedio de todas las estimaciones quedó a menos del 1% del peso real</strong>. La "sabiduría de las multitudes": muchos modelos mediocres combinados superan a uno solo.</div>
+    </section>
+
+    <!-- 12 -->
+    <section id="s12">
+      <h2><span class="h-num">12</span>Evaluación de modelos</h2>
+      <p class="lead">Un modelo no vale por cómo se ve en entrenamiento, sino por cómo predice datos nuevos.</p>
+      <h3>Validación</h3>
+      <ul>
+        <li><strong>Train/test split</strong>: entrenas con una parte (ej. 80%) y mides en la otra (20%) que el modelo nunca vio.</li>
+        <li><strong>Validación cruzada (k-fold)</strong>: partes los datos en <em>k</em> bloques, entrenas k veces rotando cuál es el de prueba, y promedias. Estimación más confiable.</li>
+      </ul>
+      <h3>Matriz de confusión (clasificación)</h3>
+      <table>
+        <tr><th></th><th>Predijo Positivo</th><th>Predijo Negativo</th></tr>
+        <tr><td><strong>Real Positivo</strong></td><td style="background:var(--teal-soft)">VP (acierto)</td><td style="background:var(--coral-soft)">FN (falso negativo)</td></tr>
+        <tr><td><strong>Real Negativo</strong></td><td style="background:var(--coral-soft)">FP (falso positivo)</td><td style="background:var(--teal-soft)">VN (acierto)</td></tr>
+      </table>
+      <h3>Métricas clave</h3>
+      <div class="formula">\[ \text{Precisión}=\frac{VP}{VP+FP}\qquad \text{Recall}=\frac{VP}{VP+FN}\qquad F_1=2\cdot\frac{P\cdot R}{P+R} \]</div>
+      <ul>
+        <li><strong>Accuracy</strong>: aciertos totales / total. Engañosa con clases desbalanceadas.</li>
+        <li><strong>Precisión</strong>: de lo que marqué positivo, ¿cuánto lo era? (importa cuando el falso positivo es caro).</li>
+        <li><strong>Recall</strong>: de todos los positivos reales, ¿cuántos atrapé? (importa cuando el falso negativo es caro: detectar cáncer).</li>
+        <li><strong>F1</strong>: media armónica de precisión y recall, cuando quieres equilibrar ambas.</li>
+        <li><strong>ROC-AUC</strong>: qué tan bien separa clases el modelo a lo largo de todos los umbrales (1 = perfecto, 0.5 = azar).</li>
+      </ul>
+      <div class="box bias"><span class="box-label">Cuidado — la paradoja de la exactitud</span>Si una enfermedad afecta al 1%, un modelo que <strong>siempre diga "sano"</strong> tiene 99% de accuracy... y es completamente inútil (recall = 0). <strong>Por eso accuracy sola no basta</strong> con clases desbalanceadas; ahí mandan precisión y recall.</div>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>La <strong>curva ROC</strong> ("Receiver Operating Characteristic") nació en la Segunda Guerra Mundial, para medir qué tan bien los operadores de <strong>radar</strong> distinguían aviones enemigos del ruido. Ochenta años después, la misma curva evalúa si un modelo distingue spam de correo legítimo o tumores de tejido sano.</div>
+    </section>
+
+    <!-- 13 -->
+    <section id="s13">
+      <h2><span class="h-num">13</span>Cadenas de Markov</h2>
+      <p class="lead">Sistemas que saltan entre estados, donde lo único que importa para el siguiente paso es <em>dónde estás ahora</em>.</p>
+      <h3>La propiedad de Markov ("sin memoria")</h3>
+      <div class="formula">\[ P(X_{t+1}=j \mid X_t=i,\,X_{t-1},\dots)=P(X_{t+1}=j \mid X_t=i) \]</div>
+      <p>El futuro depende solo del presente, no del pasado completo.</p>
+      <h3>Matriz de transición</h3>
+      <p>\(P_{ij}\) = probabilidad de pasar del estado \(i\) al \(j\). Cada <strong>fila suma 1</strong>.</p>
+      <div class="box ex"><span class="box-label">Ejemplo — el clima</span>
+        <p>☀️ Soleado y 🌧️ Lluvioso. Si hoy hace sol: 80% sigue soleado, 20% llueve. Si llueve: 60% sigue, 40% despeja.</p>
+        <div class="formula">\[ P=\begin{pmatrix} 0.8 & 0.2 \\ 0.4 & 0.6 \end{pmatrix} \]</div>
+        <p>Para el clima en \(n\) días, elevas la matriz: \(P^n\).</p>
+      </div>
+      <h3>Distribución estacionaria</h3>
+      <div class="formula">\[ \pi P=\pi \qquad \sum_i\pi_i=1 \]</div>
+      <div class="box key"><span class="box-label">Clave</span>\(\pi\) es la <strong>fracción del tiempo</strong> que el sistema pasa en cada estado a la larga, sin importar dónde empezó. En el clima sale \(\pi=(2/3,1/3)\). <strong>PageRank es exactamente esto</strong>: la estacionaria de un navegante aleatorio.</div>
+      <h3>Tipos de estado</h3>
+      <ul>
+        <li><strong>Recurrente</strong>: seguro regresas. <strong>Transitorio</strong>: quizá nunca regreses.</li>
+        <li><strong>Absorbente</strong>: una vez dentro, no sales (\(P_{ii}=1\)). Ej. "cliente que cancela".</li>
+      </ul>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>Andréi Markov inventó sus cadenas en 1906 en parte para ganar una <strong>discusión matemática-teológica</strong>. Para probar su idea, las usó para analizar la secuencia de <strong>vocales y consonantes en el poema "Eugenio Oneguin" de Pushkin</strong>, ~20,000 letras a mano. El primer "análisis de texto" de la historia se hizo sobre poesía rusa.</div>
+    </section>
+
+    <!-- 14 -->
+    <section id="s14">
+      <h2><span class="h-num">14</span>Limpieza y preparación de datos</h2>
+      <p class="lead">El trabajo invisible donde de verdad se gana o se pierde un análisis.</p>
+      <h3>Valores faltantes</h3>
+      <ul>
+        <li><strong>Eliminar</strong> filas/columnas (si son pocas o la columna es casi toda hueca).</li>
+        <li><strong>Imputar</strong>: rellenar con la media/mediana, el valor más frecuente, o un modelo.</li>
+      </ul>
+      <h3>Outliers</h3>
+      <p>Detección con el IQR (fuera de \(Q_1-1.5\cdot IQR\) o \(Q_3+1.5\cdot IQR\)) o con z-scores. Decisión: ¿es un error de captura (quitar) o un dato real extremo (conservar)?</p>
+      <h3>Escalado — clave para muchos modelos</h3>
+      <table>
+        <tr><th>Técnica</th><th>Fórmula</th><th>Resultado</th></tr>
+        <tr><td><strong>Normalización (min-max)</strong></td><td>\((x-x_{min})/(x_{max}-x_{min})\)</td><td>Reescala a [0, 1]</td></tr>
+        <tr><td><strong>Estandarización (z-score)</strong></td><td>\((x-\mu)/\sigma\)</td><td>Media 0, desviación 1</td></tr>
+      </table>
+      <div class="box key"><span class="box-label">Clave</span>Modelos basados en <strong>distancias</strong> (KNN, k-means, SVM) y el descenso de gradiente <strong>exigen escalar</strong>, o una variable con números grandes (precio) domina a una chica (recámaras). Los árboles/Random Forest no lo necesitan.</div>
+      <h3>Variables categóricas</h3>
+      <ul>
+        <li><strong>One-hot encoding</strong>: una columna 0/1 por cada categoría (sin orden).</li>
+        <li><strong>Label encoding</strong>: un número por categoría (úsalo solo si hay orden real).</li>
+      </ul>
+      <p><strong>Feature engineering</strong>: crear variables nuevas más informativas (ej. de una fecha sacar "día de la semana"). Suele dar más mejora que cambiar de modelo.</p>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>Encuesta tras encuesta confirman lo mismo: los científicos de datos pasan cerca del <strong>80% de su tiempo</strong> limpiando y preparando datos, no construyendo modelos sofisticados. A esa parte se le llama, con cariño y resignación, <strong>"data janitor work"</strong> (trabajo de conserje de datos).</div>
+    </section>
+
+    <!-- 15 -->
+    <section id="s15">
+      <h2><span class="h-num">15</span>SQL y bases de datos</h2>
+      <p class="lead">Antes de modelar, hay que sacar y juntar los datos. SQL es la herramienta universal para eso.</p>
+      <h3>El modelo relacional</h3>
+      <p>Los datos viven en <strong>tablas</strong> (filas y columnas) que se relacionan por <strong>claves</strong>: una <em>clave primaria</em> identifica cada fila; una <em>clave foránea</em> apunta a la clave primaria de otra tabla.</p>
+      <h3>Los comandos que debes dominar</h3>
+      <div class="box py"><span class="box-label">SQL esencial</span><pre><span class="k">SELECT</span> ciudad, <span class="k">AVG</span>(precio) <span class="k">AS</span> precio_prom
+<span class="k">FROM</span> departamentos
+<span class="k">WHERE</span> recamaras &gt;= 2
+<span class="k">GROUP BY</span> ciudad
+<span class="k">HAVING</span> <span class="k">AVG</span>(precio) &gt; 2000000
+<span class="k">ORDER BY</span> precio_prom <span class="k">DESC</span>;</pre></div>
+      <ul>
+        <li><code>SELECT</code> qué columnas · <code>FROM</code> qué tabla · <code>WHERE</code> filtra filas.</li>
+        <li><code>GROUP BY</code> agrupa para agregar (<code>COUNT, SUM, AVG, MAX, MIN</code>) · <code>HAVING</code> filtra grupos.</li>
+        <li><code>ORDER BY</code> ordena · <code>LIMIT</code> recorta.</li>
+      </ul>
+      <h3>JOINs — unir tablas</h3>
+      <ul>
+        <li><strong>INNER JOIN</strong>: solo las filas que coinciden en ambas tablas.</li>
+        <li><strong>LEFT JOIN</strong>: todas las de la izquierda + lo que empate de la derecha (lo demás, nulo).</li>
+      </ul>
+      <h3>Relacional vs. NoSQL</h3>
+      <p><strong>SQL/relacional</strong> (PostgreSQL, MySQL): estructura rígida, ideal para datos consistentes. <strong>NoSQL</strong> (MongoDB, etc.): flexible, escala horizontal, bueno para datos sin esquema fijo o muy grandes.</p>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>SQL tiene <strong>más de 50 años</strong>: nació en IBM en los 70 a partir del modelo relacional de Edgar Codd. Ha sobrevivido a incontables tecnologías "revolucionarias" que prometían reemplazarlo, y sigue siendo la habilidad #1 que piden en vacantes de datos. Pocas herramientas en cómputo envejecen tan bien.</div>
+    </section>
+
+    <!-- 16 -->
+    <section id="s16">
+      <h2><span class="h-num">16</span>Teoría de la información</h2>
+      <p class="lead">El "...e Información" de tu maestría. Mide la incertidumbre y la sorpresa en bits.</p>
+      <h3>Entropía</h3>
+      <p>La <span class="term">entropía</span> mide la incertidumbre (o "sorpresa promedio") de una variable. Máxima cuando todo es igual de probable; cero cuando el resultado es seguro.</p>
+      <div class="formula">\[ H(X)=-\sum_i p_i\,\log_2 p_i \]</div>
+      <div class="box ex"><span class="box-label">Ejemplo</span>Una moneda justa tiene entropía de <strong>1 bit</strong> (máxima incertidumbre). Una moneda con dos águilas tiene entropía <strong>0</strong>: ya sabes el resultado, no hay sorpresa ni información nueva.</div>
+      <h3>Ganancia de información</h3>
+      <div class="box key"><span class="box-label">Clave — así deciden los árboles</span>Un <strong>árbol de decisión</strong> elige en cada nodo la pregunta que más reduce la entropía: la de mayor <strong>ganancia de información</strong>. O sea, parte los datos por donde más "orden" gana. La teoría de la información es el motor escondido del algoritmo.</div>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>La palabra <strong>"bit"</strong> nació en 1948 en el artículo de Claude Shannon que fundó la teoría de la información, pero quien la sugirió fue su colega John Tukey (el mismo del boxplot). Shannon tomó prestado el concepto de <strong>"entropía" de la termodinámica</strong>, por consejo de von Neumann, que le dijo: "úsala, porque nadie sabe realmente qué es la entropía, así que siempre llevarás ventaja en los debates".</div>
+    </section>
+
+    <!-- 17 -->
+    <section id="s17">
+      <h2><span class="h-num">17</span>Series de tiempo</h2>
+      <p class="lead">Datos ordenados en el tiempo, donde el <em>orden importa</em>. Va directo con tus bitácoras y datos de obra.</p>
+      <h3>Componentes de una serie</h3>
+      <ul>
+        <li><strong>Tendencia</strong>: la dirección de largo plazo (sube, baja).</li>
+        <li><strong>Estacionalidad</strong>: patrones que se repiten en ciclos fijos (ventas que suben cada diciembre).</li>
+        <li><strong>Ruido</strong>: la variación aleatoria que queda.</li>
+      </ul>
+      <h3>Conceptos clave</h3>
+      <ul>
+        <li><strong>Autocorrelación</strong>: qué tanto se parece la serie a sí misma desfasada en el tiempo (¿lo de hoy depende de lo de ayer?).</li>
+        <li><strong>Estacionariedad</strong>: que las propiedades (media, varianza) no cambien con el tiempo. Muchos modelos la exigen, y por eso a veces se "diferencia" la serie para lograrla.</li>
+        <li><strong>Modelos</strong>: medias móviles, suavizado exponencial, y el clásico <strong>ARIMA</strong>.</li>
+      </ul>
+      <div class="box bias"><span class="box-label">Cuidado</span>En series de tiempo <strong>no</strong> puedes hacer un train/test aleatorio: romperías el orden temporal. Entrenas con el pasado y validas con el futuro. También se viola el supuesto de independencia de la regresión clásica.</div>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>Los precios de las acciones se comportan tan parecido a un <strong>"paseo aleatorio"</strong> (random walk: el siguiente paso es esencialmente impredecible desde el actual) que esa observación dio origen a toda una teoría financiera y a un premio Nobel. Es la razón matemática por la que predecir la bolsa a corto plazo es tan endiabladamente difícil.</div>
+    </section>
+
+    <!-- 18 -->
+    <section id="s18">
+      <h2><span class="h-num">18</span>Sesgos que arruinan análisis</h2>
+      <p class="lead">No son fórmulas, pero distinguen a quien calcula de quien <em>entiende</em>. Caen seguido en preguntas conceptuales.</p>
+      <h3>Sesgos de datos / muestreo</h3>
+      <ul>
+        <li><strong>Selección</strong>: la muestra no representa a la población (elección no aleatoria).</li>
+        <li><strong>Supervivencia</strong>: solo analizas a los que "sobrevivieron" hasta tus datos.</li>
+        <li><strong>Confirmación</strong>: buscas datos que confirman lo que ya creías.</li>
+        <li><strong>Publicación</strong>: solo se publican resultados "positivos", inflando la evidencia aparente.</li>
+      </ul>
+      <div class="box bias"><span class="box-label">Ejemplo — supervivencia (Abraham Wald, WWII)</span>Querían blindar los aviones donde volvían más agujereados. Wald vio el error: esos aviones <em>regresaron</em>. Había que blindar las zonas <strong>sin</strong> agujeros, porque los impactados ahí eran los que <em>no</em> volvían. Los datos solo mostraban sobrevivientes.</div>
+      <h3>Paradoja de Simpson</h3>
+      <div class="box bias"><span class="box-label">Cuidado — clásico de examen</span>Una tendencia que aparece en cada grupo <strong>se invierte</strong> al juntarlos. Siempre revisa si hay una variable de agrupación oculta antes de concluir.</div>
+      <h3>Correlación ≠ causalidad</h3>
+      <p>Dos variables pueden moverse juntas por una <span class="term">variable de confusión</span> que afecta a ambas. Helado y ahogamientos suben juntos: no por el helado, sino por el <em>calor</em>.</p>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>La paradoja de Simpson no es teórica: en <strong>1973, la Universidad de Berkeley</strong> parecía discriminar a las mujeres en admisiones (las aceptaban menos que a hombres en el total). Pero al desglosar por departamento, las mujeres eran aceptadas <em>igual o más</em>; solo aplicaban más a las carreras más competidas. El "sesgo" del total se evaporó al mirar los grupos.</div>
+    </section>
+
+    <!-- 19 -->
+    <section id="s19">
+      <h2><span class="h-num">19</span>Inferencia causal</h2>
+      <p class="lead">Pasar de "estas cosas se relacionan" a "esto <em>causa</em> aquello". El siguiente nivel, cada vez más central.</p>
+      <h3>El problema del confusor</h3>
+      <p>Un <span class="term">confusor</span> causa tanto a la supuesta causa como al efecto, creando una asociación engañosa. Si no lo controlas, atribuyes a X un efecto que en realidad viene de Z.</p>
+      <h3>La regla de oro: aleatorización</h3>
+      <div class="box key"><span class="box-label">Clave</span>Un <strong>experimento aleatorizado (RCT)</strong> asigna al azar quién recibe el tratamiento. Eso <strong>rompe la conexión con todos los confusores</strong> (conocidos y no), porque quedan balanceados entre grupos. Por eso el RCT es el estándar de oro de la causalidad.</div>
+      <p>Cuando no puedes experimentar (datos observacionales), se aproxima con:</p>
+      <ul>
+        <li><strong>Control/ajuste</strong> por confusores (meterlos a una regresión).</li>
+        <li><strong>DAGs</strong> (diagramas causales): grafos que muestran qué causa qué y te dicen <em>qué</em> controlar (criterio de la puerta trasera) y qué <em>no</em>.</li>
+        <li><strong>Variables instrumentales, diferencias-en-diferencias, matching</strong>: imitar un experimento con datos observados.</li>
+      </ul>
+      <div class="box bias"><span class="box-label">Cuidado — no controles de más</span>Controlar la variable equivocada (un "colisionador") puede <strong>introducir</strong> sesgo en vez de quitarlo. Más controles no siempre es mejor; el DAG te dice cuáles sí.</div>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>Existe un sitio (<em>Spurious Correlations</em>, de Tyler Vigen) dedicado a correlaciones absurdas pero estadísticamente reales: por ejemplo, el <strong>consumo de queso per cápita en EE. UU. correlaciona casi perfectamente con el número de personas que mueren enredadas en sus sábanas</strong>. El recordatorio más divertido de que correlación jamás implica causalidad.</div>
+    </section>
+
+    <!-- 20 -->
+    <section id="s20">
+      <h2><span class="h-num">20</span>Cheat sheet — fórmulas clave</h2>
+      <p class="lead">Para el repaso final. Despliega cada bloque.</p>
+      <details class="cheat" open>
+        <summary>Descriptiva y probabilidad</summary>
+        <div class="cheat-body">
+          <p>Media \(\bar{x}=\frac{1}{n}\sum x_i\) · Varianza \(s^2=\frac{1}{n-1}\sum(x_i-\bar{x})^2\) · z \(=(x-\mu)/\sigma\)</p>
+          <p>Bayes \(P(A\mid B)=\dfrac{P(B\mid A)P(A)}{P(B)}\) · \(E[X]=\sum x_iP(x_i)\)</p>
+        </div>
+      </details>
+      <details class="cheat">
+        <summary>Distribuciones e inferencia</summary>
+        <div class="cheat-body">
+          <p>Binomial \(\binom{n}{k}p^k(1-p)^{n-k}\), \(E=np\) · Poisson \(\frac{\lambda^k e^{-\lambda}}{k!}\), \(E=\text{Var}=\lambda\)</p>
+          <p>\(SE=\sigma/\sqrt{n}\) · IC \(\bar{x}\pm z_{\alpha/2}\sigma/\sqrt{n}\) · t \(=\frac{\bar{x}-\mu_0}{s/\sqrt{n}}\) · Tipo I\(=\alpha\), II\(=\beta\)</p>
+        </div>
+      </details>
+      <details class="cheat">
+        <summary>Álgebra lineal y cálculo</summary>
+        <div class="cheat-body">
+          <p>Regresión matricial \(\boldsymbol{\beta}=(X^\top X)^{-1}X^\top y\) · Eigen \(A\mathbf{v}=\lambda\mathbf{v}\)</p>
+          <p>Descenso de gradiente \(\theta\leftarrow\theta-\eta\,\nabla J(\theta)\)</p>
+        </div>
+      </details>
+      <details class="cheat">
+        <summary>Regresión y evaluación</summary>
+        <div class="cheat-body">
+          <p>\(\beta_1=\frac{\text{cov}(x,y)}{\text{var}(x)}\) · \(R^2=1-\frac{SS_{res}}{SS_{tot}}\) · Error \(=\)Sesgo\(^2+\)Var\(+\)ruido</p>
+          <p>Precisión \(=\frac{VP}{VP+FP}\) · Recall \(=\frac{VP}{VP+FN}\) · \(F_1=2\frac{P\cdot R}{P+R}\)</p>
+        </div>
+      </details>
+      <details class="cheat">
+        <summary>Markov e información</summary>
+        <div class="cheat-body">
+          <p>Estacionaria \(\pi P=\pi,\ \sum\pi_i=1\) · Clima en \(n\) días \(P^n\)</p>
+          <p>Entropía \(H(X)=-\sum p_i\log_2 p_i\)</p>
+        </div>
+      </details>
+      <div class="pill-row" style="margin-top:24px">
+        <span class="pill">n−1 = grados de libertad</span>
+        <span class="pill">p &lt; α ⇒ rechazo H₀</span>
+        <span class="pill">TLC ⇒ medias normales</span>
+        <span class="pill">corr ≠ causa</span>
+        <span class="pill">overfit = var alta</span>
+        <span class="pill">RCT rompe confusores</span>
+        <span class="pill">escalar para KNN/k-means</span>
+        <span class="pill">accuracy engaña si hay desbalance</span>
+      </div>
+      <div class="box sabias"><span class="box-label">¿Sabías que...?</span>Florence Nightingale, además de enfermera, fue una <strong>pionera de la estadística</strong>: inventó un tipo de gráfico (el "diagrama de área polar") para demostrar con datos que más soldados morían por infecciones evitables que por heridas de guerra. Su visualización convenció al gobierno británico de reformar la higiene hospitalaria. Fue la <strong>primera mujer miembro de la Royal Statistical Society</strong>. Una buena gráfica, bien hecha, salva vidas.</div>
+    </section>
+
+    <div class="foot">
+      Guía maestra de repaso para la Maestría en Ciencia de Datos e Información. Material condensado: verifica siempre contra el temario y la bibliografía oficial de tu programa. Las fórmulas se renderizan con KaTeX (requiere conexión la primera vez que abres el archivo).
+    </div>
+
+  </main>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded",function(){
+    if(window.renderMathInElement){
+      renderMathInElement(document.body,{
+        delimiters:[
+          {left:"\\[",right:"\\]",display:true},
+          {left:"\\(",right:"\\)",display:false}
+        ],
+        throwOnError:false
+      });
+    }
+    var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),sc=document.getElementById("scrim");
+    function toggle(){sb.classList.toggle("open");sc.classList.toggle("show");}
+    btn&&btn.addEventListener("click",toggle);
+    sc&&sc.addEventListener("click",toggle);
+    document.querySelectorAll("#toc a").forEach(function(a){
+      a.addEventListener("click",function(){if(window.innerWidth<=920){sb.classList.remove("open");sc.classList.remove("show");}});
+    });
+    var links=[].slice.call(document.querySelectorAll("#toc a"));
+    var secs=links.map(function(l){return document.querySelector(l.getAttribute("href"));});
+    function spy(){
+      var pos=window.scrollY+120,idx=0;
+      for(var i=0;i<secs.length;i++){ if(secs[i]&&secs[i].offsetTop<=pos)idx=i; }
+      links.forEach(function(l){l.classList.remove("active");});
+      links[idx]&&links[idx].classList.add("active");
+    }
+    window.addEventListener("scroll",spy,{passive:true}); spy();
+  });
+</script>
+</body>
+</html>
